@@ -5,6 +5,9 @@ from rest_framework.response import Response
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from rest_framework.routers import DefaultRouter
+from .views import ListingViewSet, BookingViewSet
+
 
 class SampleAPIView(APIView):
     def get(self, request):
@@ -25,6 +28,10 @@ schema_view =get_schema_view(
 
 # Define API routes
 router = routers.DefaultRouter()
+router = DefaultRouter()
+router.register(r'listings', ListingViewSet)
+router.register(r'bookings', BookingViewSet)
+
 urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-docs'),
     path('api/sample/', SampleAPIView.as_view(), name='sample-api'),
